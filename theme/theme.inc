@@ -74,7 +74,6 @@ function islandora_document_preprocess_islandora_document(&$variables) {
       // Sanitize this object name a bit.
       $download_url = 'islandora/object/' . $islandora_object->id . '/datastream/OBJ/download/' . $islandora_object->label;
       $download_text = t("Download document");
-      $variables['islandora_download_link'] = l($download_text, $download_url, array('attributes' => array('class' => array('islandora-pdf-link'))));
     }
 
   }
