@@ -141,45 +141,88 @@ function islandora_document_islandora_sp_document_islandora_ingest_steps() {
 /**
  * Implements hook_CMODEL_PID_islandora_derivative().
  */
-function islandora_document_islandora_sp_document_islandora_derivative() {
+function islandora_document_islandora_sp_document_islandora_derivative($object) {
   $derivatives = array();
-  $derivatives[] = array(
-    'source_dsid' => 'OBJ',
-    'destination_dsid' => 'PDF',
-    'weight' => '0',
-    'function' => array(
-      'islandora_document_add_pdf_derivative',
-    ),
-    'file' => drupal_get_path('module', 'islandora_document') . '/includes/derivatives.inc',
-  );
-  $derivatives[] = array(
-    'source_dsid' => 'PDF',
-    'destination_dsid' => 'TN',
-    'weight' => '0',
-    'function' => array(
-      'islandora_document_add_tn_derivative',
-    ),
-    'file' => drupal_get_path('module', 'islandora_document') . '/includes/derivatives.inc',
-  );
-  $derivatives[] = array(
-    'source_dsid' => 'PDF',
-    'destination_dsid' => 'PREVIEW',
-    'weight' => '1',
-    'function' => array(
-      'islandora_document_add_preview_derivative',
-    ),
-    'file' => drupal_get_path('module', 'islandora_document') . '/includes/derivatives.inc',
-  );
-  if (variable_get('islandora_document_create_fulltext', FALSE)) {
+  if ($object['OBJ']) {
+    $derivatives[] = array(
+      'source_dsid' => 'OBJ',
+      'destination_dsid' => 'PDF',
+      'weight' => '0',
+      'function' => array(
+        'islandora_document_add_pdf_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_document') . '/includes/derivatives.inc',
+    );
     $derivatives[] = array(
       'source_dsid' => 'PDF',
-      'destination_dsid' => 'FULL_TEXT',
-      'weight' => '2',
+      'destination_dsid' => 'TN',
+      'weight' => '0',
       'function' => array(
-        'islandora_document_add_fulltext_derivative',
+        'islandora_document_add_tn_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_document') . '/includes/derivatives.inc',
+    );
+    $derivatives[] = array(
+      'source_dsid' => 'PDF',
+      'destination_dsid' => 'PREVIEW',
+      'weight' => '1',
+      'function' => array(
+        'islandora_document_add_preview_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_document') . '/includes/derivatives.inc',
+    );
+    if (variable_get('islandora_document_create_fulltext', FALSE)) {
+      $derivatives[] = array(
+        'source_dsid' => 'PDF',
+        'destination_dsid' => 'FULL_TEXT',
+        'weight' => '2',
+        'function' => array(
+          'islandora_document_add_fulltext_derivative',
+        ),
+        'file' => drupal_get_path('module', 'islandora_document') . '/includes/derivatives.inc',
+      );
+    }
+  }
+  else {
+    $derivatives[] = array(
+      'source_dsid' => 'OBJ',
+      'destination_dsid' => 'TN',
+      'weight' => '0',
+      'function' => array(
+        'islandora_document_add_tn_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_document') . '/includes/derivatives.inc',
+    );
+    $derivatives[] = array(
+      'source_dsid' => 'OBJ',
+      'destination_dsid' => 'PREVIEW',
+      'weight' => '1',
+      'function' => array(
+        'islandora_document_add_preview_derivative',
+      ),
+      'file' => drupal_get_path('module', 'islandora_document') . '/includes/derivatives.inc',
+    );
+    if (variable_get('islandora_document_create_fulltext', FALSE)) {
+      $derivatives[] = array(
+        'source_dsid' => 'OBJ',
+        'destination_dsid' => 'FULL_TEXT',
+        'weight' => '2',
+        'function' => array(
+          'islandora_document_add_fulltext_derivative',
+        ),
+        'file' => drupal_get_path('module', 'islandora_document') . '/includes/derivatives.inc',
+      );
+    }
+      $derivatives[] = array(
+      'source_dsid' => 'OBJ',
+      'destination_dsid' => 'PDF',
+      'weight' => '0',
+      'function' => array(
+        'islandora_document_add_pdf_derivative',
       ),
       'file' => drupal_get_path('module', 'islandora_document') . '/includes/derivatives.inc',
     );
   }
+
   return $derivatives;
 }
