@@ -22,3 +22,14 @@ function islandora_document_uninstall() {
   module_load_include('inc', 'islandora', 'includes/solution_packs');
   islandora_install_solution_pack('islandora_document', 'uninstall');
 }
+
+/**
+ * Update islandora document viewers selection.
+ */
+function islandora_document_update_7001(&$sandbox) {
+  $islandora_pdf_viewers = variable_get('islandora_pdf_viewers', array());
+  $islandora_document_viewers = variable_get('islandora_document_viewers', array());
+  $islandora_document_viewers['default'] = $islandora_pdf_viewers['default'];
+  variable_set('islandora_document_viewers', $islandora_document_viewers);
+  return get_t('Islandora Document viewers updated.');
+}
