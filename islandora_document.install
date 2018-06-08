@@ -33,8 +33,8 @@ function islandora_document_uninstall() {
  *
  * This update sets the Islandora document solution pack viewer to the same
  * value as the Islandora PDF solution pack viewer so that the fix in
- * theme/theme.inc to use the viewer selected in the Islandora document admin
- * does not disrupt any functionality.
+ * to use the viewer selected in the Islandora document admin does not disrupt
+ * any functionality.
  */
 function islandora_document_update_7001(&$sandbox) {
   $islandora_pdf_viewers = variable_get('islandora_pdf_viewers', array());
@@ -44,5 +44,6 @@ function islandora_document_update_7001(&$sandbox) {
   // replacing the whole array could mess things up if other elements differ.
   $islandora_document_viewers['default'] = $islandora_pdf_viewers['default'];
   variable_set('islandora_document_viewers', $islandora_document_viewers);
-  return get_t('Islandora Document viewers updated.');
+  $t = get_t();
+  return $t('Islandora Document viewers updated.');
 }
