@@ -44,7 +44,7 @@ function template_preprocess_islandora_document(&$variables) {
   $variables['description'] = islandora_retrieve_description_markup($islandora_object);
 
   module_load_include('inc', 'islandora', 'includes/solution_packs');
-  $viewer = islandora_get_viewer(array(), 'islandora_pdf_viewers', $islandora_object);
+  $viewer = islandora_get_viewer(array(), 'islandora_document_viewers', $islandora_object);
 
   if ($viewer) {
     $variables['islandora_content'] = $viewer;

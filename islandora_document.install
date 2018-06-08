@@ -22,3 +22,28 @@ function islandora_document_uninstall() {
   module_load_include('inc', 'islandora', 'includes/solution_packs');
   islandora_install_solution_pack('islandora_document', 'uninstall');
 }
+
+/**
+ * Update Islandora document viewers selection.
+ *
+ * The viewer to display the preview of a document object is currently
+ * determined by the viewer selected in the Islandora PDF solution pack
+ * configuration, rather than the Islandora document solution pack
+ * configuration.
+ *
+ * This update sets the Islandora document solution pack viewer to the same
+ * value as the Islandora PDF solution pack viewer so that the fix in
+ * to use the viewer selected in the Islandora document admin does not disrupt
+ * any functionality.
+ */
+function islandora_document_update_7001(&$sandbox) {
+  $islandora_pdf_viewers = variable_get('islandora_pdf_viewers', array());
+  $islandora_document_viewers = variable_get('islandora_document_viewers', array());
+  // This is the variable that stores the viewer selection from the admin form.
+  // We are only replacing this element of the array because it is possible that
+  // replacing the whole array could mess things up if other elements differ.
+  $islandora_document_viewers['default'] = $islandora_pdf_viewers['default'];
+  variable_set('islandora_document_viewers', $islandora_document_viewers);
+  $t = get_t();
+  return $t('Islandora Document viewers updated.');
+}
